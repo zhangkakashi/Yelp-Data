@@ -1,0 +1,13 @@
+create table Yelp_Checkin_HBase(
+    type STRING,
+    business_id STRING,
+    checkin_info MAP<STRING, INT>
+)
+STORED BY 
+'org.apache.hadoop.hive.hbase.HBaseStorageHandler' 
+WITH SERDEPROPERTIES
+("hbase.columns.mapping" = "checkin:type, :key, checkin_info:")
+TBLPROPERTIES 
+("hbase.table.name" = "YELP_CHECKIN");
+
+INSERT OVERWRITE TABLE Yelp_Checkin_HBase SELECT * FROM Yelp_Checkin_tmp;
